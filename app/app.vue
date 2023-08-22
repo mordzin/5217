@@ -51,14 +51,12 @@ const taskName = ref("");
 const cycleDuration = 3120000; // 52 minutos em milissegundos
 const breakDuration = 1020000; // 17 minutos em milissegundos
 const maxDuration = cycleDuration + breakDuration;
-const dashArray = ref(360); // Comprimento inicial do contorno do círculo
+const dashArray = ref(328); // Comprimento inicial do contorno do círculo
 const dashOffset = ref(0); // Deslocamento para o contorno do círculo
 const timerInterval = ref(null);
 const longPressTimer = ref(null);
 
-const minutes = computed(() =>
-	Math.floor((cycleDuration + breakDuration - 600000) / 60000)
-);
+const minutes = computed(() => parseInt((maxDuration - 600000) / 60000));
 const seconds = computed(() =>
 	((time.value % 60000) / 1000).toFixed(0).toString().padStart(2, "0")
 );
@@ -168,7 +166,7 @@ watch(time, () => updateProgressBar());
 	transition: stroke-dashoffset 1s linear;
 }
 .isRunning {
-	stroke: #00cc66; /* Green for work time */
+	stroke: #00cc66;
 }
 
 .isPaused {
