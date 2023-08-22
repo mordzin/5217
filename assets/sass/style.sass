@@ -1,0 +1,55 @@
+$base: 0.5rem
+
+:root
+	@each $num in 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+		--#{$num}: #{ $base * $num }
+
+*:not(html, head *, script, span, label, svg, circle, text, tspan)
+	margin: 0
+	padding: 0
+	float: left
+	width: stretch
+	position: relative
+	border: none !important
+	outline: none !important
+	box-shadow: none !important
+	appearance: auto
+	box-sizing: border-box
+	scroll-behavior: smooth
+	transition: all 0.1s ease-in-out
+	background-color: transparent
+	-webkit-fill-available: stretch
+	-moz-available: stretch
+	color: #fff !important
+	text-align: center
+
+::-webkit-scrollbar
+	display: none
+
+html, body, #__nuxt
+	min-height: 100%
+	height: 100%
+
+.details
+	padding: var(--3)
+	border-radius: var(--3)
+
+.style
+	color: #111
+	background-color: #fff
+	@extend .details
+
+.style2
+	color: #fff
+	background-color: #000
+	@extend .details
+
+.hover:hover
+	mix-blend-mode: screen
+
+.cp
+	cursor: pointer
+
+@import fonts, grid, colors
+@import fields, buttons
+@import transitions

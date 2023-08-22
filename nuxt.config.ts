@@ -11,8 +11,20 @@ export default defineNuxtConfig({
 						"5217 is a productivity method: 52 min working, 17 min break. Boosts focus and efficiency.",
 				},
 			],
+			link: [
+				{
+					rel: "stylesheet",
+					href: "https://fonts.googleapis.com/icon?family=Material+Icons+Outlined",
+				},
+			],
 		},
 	},
+	vue: {
+		compilerOptions: {
+			isCustomElement: (tag: string) => ["grid", "content"].includes(tag),
+		},
+	},
+	css: ["@/assets/sass/style.sass"],
 	nitro: { preset: "firebase" },
 	typescript: { shim: false },
 	ssr: false,

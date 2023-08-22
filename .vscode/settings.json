@@ -1,0 +1,37 @@
+{
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#1c64ff",
+		"activityBar.background": "#1c64ff",
+		"activityBar.foreground": "#e7e7e7",
+		"activityBar.inactiveForeground": "#e7e7e799",
+		"activityBarBadge.background": "#ff80a8",
+		"activityBarBadge.foreground": "#15202b",
+		"commandCenter.border": "#e7e7e799",
+		"sash.hoverBorder": "#1c64ff",
+		"statusBar.background": "#004ae8",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.hoverBackground": "#1c64ff",
+		"statusBarItem.remoteBackground": "#004ae8",
+		"statusBarItem.remoteForeground": "#e7e7e7",
+		"titleBar.activeBackground": "#004ae8",
+		"titleBar.activeForeground": "#e7e7e7",
+		"titleBar.inactiveBackground": "#004ae899",
+		"titleBar.inactiveForeground": "#e7e7e799"
+	},
+	"peacock.color": "#004ae8",
+	"files.exclude": {
+		"node_modules": false,
+		"assets": false,
+		"public": false,
+		"nuxt.config.ts": false,
+		"package.json": false,
+		"README.md": false,
+		"tsconfig.json": false,
+		"yarn.lock": false,
+		".env": false,
+		".gitignore": false,
+		".nuxt": false,
+		"tests": false,
+		"server": false
+	}
+}

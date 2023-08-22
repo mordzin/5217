@@ -1,0 +1,44 @@
+*
+	color: #fff
+	font-size: 1rem
+	font-smooth: antialiased
+	font-family: "Poppins", sans-serif
+
+@each $num in (0, 1, 2, 3, 4, 5, 6, 7)
+	.fs#{ $num }
+		font-size: #{calc( 7 / $num )}rem
+
+.fwb
+	font-weight: 500
+.fwr
+	font-weight: 400
+.faccent
+	color: var(--accent)
+
+h1, h2, h3, h4, h5, h6
+	@extend .fwb
+
+h1, h2, h3, h4, h5, h6
+	&:not(:last-child)
+		margin-bottom: var(--1)
+	
+h1
+	@extend .fs2
+h2
+	@extend .fs3
+h3
+	@extend .fs4
+h4
+	@extend .fs5
+h5
+	@extend .fs6
+
+p
+	@extend .fwr
+
+.tc
+	text-align: center
+.tl
+	text-align: left
+.tr
+	text-align: right
