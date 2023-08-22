@@ -8,30 +8,24 @@
 				}"
 			>
 				<div class="timer" @click="toggleTimer()">
-					<svg viewBox="0 0 360 360">
+					<svg viewBox="0 0 360 360" :class="time.isPaused ? 'isPaused' : ''">
 						<text
 							class="timer__numbers"
-							x="180"
-							y="180"
-							text-anchor="middle"
+							x="60"
+							y="188"
 							dominant-baseline="central"
 						>
 							{{ time.minutes }}
-							<tspan class="seconds" opacity="0.5">{{ time.seconds }}</tspan>
+							<tspan class="seconds" opacity="0.50">{{ time.seconds }}</tspan>
 						</text>
+						<circle r="180" cx="180" cy="180"></circle>
 						<circle
 							r="180"
 							cx="180"
 							cy="180"
-							:class="{ isPaused: time.isPaused }"
-						></circle>
-						<circle
-							r="180"
-							cx="180"
-							cy="180"
-							:stroke-dasharray="progress.dasharrayWork"
+							:stroke-dasharray="1111"
 							:stroke-dashoffset="
-								progress.dasharrayWork + progress.dashoffsetWork
+								(1111 / 3540) * (time.minutes * 60 + time.seconds) * -1
 							"
 						></circle>
 					</svg>
@@ -108,8 +102,8 @@ const toggleTimer = () => {
 		overflow: visible
 		circle
 			fill: none
-			stroke: #111
-			stroke-opacity: 0.6
+			stroke: #fff
+			stroke-opacity: 0.33
 			stroke-location: inside
 			stroke-width: 24px
 			transform: rotate(-90deg)
@@ -120,7 +114,4 @@ const toggleTimer = () => {
 			fill: #ffffff
 			tspan
 				font-size: 4rem
-
-.isPaused
-	stroke: #ccff00
 </style>
