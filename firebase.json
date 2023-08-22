@@ -1,0 +1,7 @@
+{
+	"hosting": {
+		"site": "the5217",
+		"public": ".output/public",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+	}
+}

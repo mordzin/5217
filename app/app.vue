@@ -5,42 +5,38 @@
 		@mousedown="handleMouseDown"
 		@mouseup="handleMouseUp"
 	>
-		<div class="timer">
-			<div
-				class="overlay"
-				:style="{
-					position: `absolute`,
-					width: `100%`,
-					height: `100%`,
-					zIndex: `2`,
-					top: `0`,
-				}"
-			></div>
-			<svg width="100%" height="100%" viewBox="0 0 100 100">
-				<circle
-					:class="{
-						isRunning: isRunning,
-						isPaused: isPaused,
-					}"
-					class="progress-circle-foreground"
-					cx="50"
-					cy="50"
-					r="46"
-					:stroke-dasharray="dashArray"
-					:stroke-dashoffset="dashOffset"
-				/>
-				<text
-					class="time"
-					x="50"
-					y="50"
-					text-anchor="middle"
-					dominant-baseline="central"
-				>
-					{{ minutes }}
-					<tspan class="seconds" opacity="0.5">{{ seconds }}</tspan>
-				</text>
-			</svg>
-			<input v-model="taskName" class="task-input" />
+		<!-- Main -->
+		<div class="content">
+			<div class="timer">
+				<svg width="100%" height="100%" viewBox="0 0 100 100">
+					<circle
+						:class="{
+							isRunning: isRunning,
+							isPaused: isPaused,
+						}"
+						class="progress-circle-foreground"
+						cx="50"
+						cy="50"
+						r="46"
+						:stroke-dasharray="dashArray"
+						:stroke-dashoffset="dashOffset"
+					/>
+					<text
+						class="time"
+						x="50"
+						y="50"
+						text-anchor="middle"
+						dominant-baseline="central"
+					>
+						{{ minutes }}
+						<tspan class="seconds" opacity="0.5">{{ seconds }}</tspan>
+					</text>
+				</svg>
+			</div>
+			<input v-model="taskName" class="task-input" placeholder="Tarefa" />
+			<p style="opacity: 0.2">
+				Long press to start / reset. Press to pause / play
+			</p>
 		</div>
 	</div>
 </template>
@@ -60,7 +56,9 @@ const dashOffset = ref(0); // Deslocamento para o contorno do círculo
 const timerInterval = ref(null);
 const longPressTimer = ref(null);
 
-const minutes = computed(() => Math.floor(time.value / 60000));
+const minutes = computed(() =>
+	Math.floor((cycleDuration + breakDuration - 600000) / 60000)
+);
 const seconds = computed(() =>
 	((time.value % 60000) / 1000).toFixed(0).toString().padStart(2, "0")
 );
@@ -110,43 +108,55 @@ const startTimer = () => {
 	}, interval);
 };
 
-const isBreakTime = () => time.value <= cycleDuration && time.value > 0;
-
 onMounted(() => updateProgressBar());
 
 watch(time, () => updateProgressBar());
 </script>
 
-<style scoped>
+<style>
 * {
-	transition: all 1 ease-in-out;
+	padding: 0;
+	margin: 0;
+	color: #fff;
 }
 .app.dark {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	min-height: 100vh;
-	background-color: #181818;
+	width: 100%;
+	max-height: 100vh;
+	max-width: 100vw;
+	background-color: #222;
 	font-family: Arial, sans-serif;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	transition: all 1s ease-in-out;
+}
+
+.content {
+	display: grid;
+	grid-template-columns: 1fr;
+	justify-items: center;
+	grid-auto-flow: row;
 	cursor: pointer;
+	gap: 3rem;
+	min-width: -webkit-fill-available;
 }
 
 .timer {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	width: 320px;
+	height: 320px;
+	align-self: center;
 }
 
 .task-input {
-	display: none;
-	font-size: 1.5rem;
-	margin-top: 10px;
+	font-size: 8rem;
 	text-align: center;
+	font-weight: bold;
+	width: min-content;
 	border: none;
 	outline: none;
 	background-color: transparent;
-	color: #000000;
 }
 .progress-circle-foreground {
 	fill: none;
