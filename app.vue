@@ -1,5 +1,5 @@
 <template>
-	<div class="app p3 h100 grid gaic" @click="toggleTimer()">
+	<div class="app p3 h100 grid gaic">
 		<grid class="hmin grid gaic jcc jic gfr g5">
 			<div
 				:style="{
@@ -7,7 +7,7 @@
 					height: `320px`,
 				}"
 			>
-				<div class="timer">
+				<div class="timer" @click="toggleTimer()">
 					<svg viewBox="0 0 360 360">
 						<text
 							class="timer__numbers"
