@@ -2,8 +2,8 @@
 	<div
 		class="app dark"
 		@click="toggleTimer()"
-		@mousedown="handleMouseDown"
-		@mouseup="handleMouseUp"
+		@mousedown="handleMouseDown()"
+		@mouseup="handleMouseUp()"
 	>
 		<!-- Main -->
 		<div class="content">
@@ -112,6 +112,10 @@ watch(time, () => updateProgressBar());
 </script>
 
 <style>
+html,
+body {
+	background-color: #222;
+}
 * {
 	padding: 0;
 	margin: 0;
@@ -122,12 +126,11 @@ watch(time, () => updateProgressBar());
 	width: 100%;
 	max-height: 100vh;
 	max-width: 100vw;
-	background-color: #222;
 	font-family: Arial, sans-serif;
 	display: grid;
 	place-items: center;
 	overflow: hidden;
-	transition: all 1s ease-in-out;
+	transition: all 0.5s ease-in-out;
 }
 
 .content {
