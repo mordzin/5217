@@ -8,6 +8,7 @@
 			v-model="data[prop]"
 			:class="{ pt7: label }"
 			:autofocus="autofocus"
+			@keyup.enter="$emit('action')"
 		/>
 		<Icon :for="name" :icon="`search`" v-if="icon" />
 		<label :for="name" v-if="label"> {{ label }} </label>

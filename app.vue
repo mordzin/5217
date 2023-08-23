@@ -1,51 +1,95 @@
 <template>
 	<div class="app p3 h100 grid gaic">
-		<grid class="hmin grid gaic jcc jic gfr g5">
-			<div
-				:style="{
-					width: `320px`,
-					height: `320px`,
-				}"
-			>
-				<div class="timer" @click="toggleTimer()">
-					<svg viewBox="0 0 360 360" :class="time.isPaused ? 'isPaused' : ''">
-						<text
-							class="timer__numbers"
-							x="60"
-							y="188"
-							dominant-baseline="central"
-						>
-							{{ time.minutes }}
-							<tspan class="seconds" opacity="0.50">{{ time.seconds }}</tspan>
-						</text>
-						<circle r="180" cx="180" cy="180"></circle>
-						<circle
-							r="180"
-							cx="180"
-							cy="180"
-							:stroke-dasharray="1111"
-							:stroke-dashoffset="
-								(1111 / 3540) * (time.minutes * 60 + time.seconds) * -1
-							"
-						></circle>
-					</svg>
+		<grid style="grid-template-columns: 1fr 4fr 1fr">
+			<List>
+				<grid
+					class="g2"
+					style="grid-template-columns: min-content 1fr"
+					v-for="task in tasks"
+					:key="task.id"
+				>
+					<Icon
+						:icon="!task.done ? `radio_button_unchecked` : `task_alt`"
+						@click="task.done = !task.done"
+						class="p1"
+					/>
+					<Field :data="task" :prop="`name`" class="p0" />
+				</grid>
+				<grid class="g2" style="grid-template-columns: min-content 1fr">
+					<Field
+						:data="newTask"
+						:prop="`name`"
+						class="p2"
+						:placeholder="`New Task`"
+						@action="createNewTask()"
+					/>
+				</grid>
+			</List>
+
+			<grid class="hmin grid gaic jcc jic gfr g5">
+				<div
+					:style="{
+						width: `320px`,
+						height: `320px`,
+					}"
+				>
+					<div class="timer" @click="toggleTimer()">
+						<svg viewBox="0 0 360 360" :class="time.isPaused ? 'isPaused' : ''">
+							<text
+								class="timer__numbers"
+								x="60"
+								y="188"
+								dominant-baseline="central"
+							>
+								{{ time.minutes }}
+								<tspan class="seconds" opacity="0.50">
+									{{
+										time.seconds < 10
+											? String(time.seconds).padStart(2, 0)
+											: time.seconds
+									}}
+								</tspan>
+							</text>
+							<circle r="180" cx="180" cy="180"></circle>
+							<circle
+								r="180"
+								cx="180"
+								cy="180"
+								:stroke-dasharray="1111"
+								:stroke-dashoffset="
+									(1111 / 3540) * (time.minutes * 60 + time.seconds) * -1
+								"
+							></circle>
+						</svg>
+					</div>
 				</div>
-			</div>
-			<div>
-				<input v-model="task.name" placeholder="Nome da Tarefa" class="bgn" />
-				<!-- Futuramente, Link da Tarefa -->
-				<p style="opacity: 0.2">
-					Long press to start / reset. Press to pause / play
-				</p>
-			</div>
+				<div>
+					<!-- <h1 placeholder="Nome da Tarefa" class="bgn">{{ newTask.name }}</h1> -->
+					<!-- Futuramente, Link da Tarefa -->
+					<p style="opacity: 0.2">
+						Long press to start / reset. Press to pause / play
+					</p>
+				</div>
+			</grid>
 		</grid>
 	</div>
 </template>
 
 <script setup>
-const task = reactive({
+const tasks = reactive([]);
+const newTask = ref({
+	id: 0,
 	name: ``,
 });
+
+const createNewTask = () => {
+	tasks.push(getCopy(newTask.value));
+	newTask.value = {
+		id: uuid(),
+		name: ``,
+		done: false,
+	};
+};
 
 const time = reactive({
 	work: 52,
