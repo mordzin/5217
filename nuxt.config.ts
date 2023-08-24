@@ -24,6 +24,7 @@ export default defineNuxtConfig({
 			isCustomElement: (tag: string) => ["grid", "content"].includes(tag),
 		},
 	},
+	modules: [["@pinia/nuxt", { autoImports: ["defineStore", "storeToRefs"] }]],
 	css: ["@/assets/sass/style.sass"],
 	nitro: { preset: "firebase" },
 	typescript: { shim: false },
