@@ -1,18 +1,31 @@
 <template>
-	<div class="task__content grid jic gfr" v-if="curTask">
-		<h1 class="tc">
-			{{ curTask.title }}
-		</h1>
-		<div class="x4 tl">
-			<p>
-				{{ curTask.content }}
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-				consequuntur quibusdam quo qui dolor ratione ab nemo aut distinctio ea?
-				Est laborum repellendus obcaecati temporibus quia repellat odio quis
-				explicabo.
+	<grid class="task__content jic" v-if="curTask">
+		<div class="task__details tc">
+			<h1>
+				{{ curTask.title }}
+			</h1>
+			<p class="pt2">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam
+				ullam ex corporis, porro temporibus, dolor asperiores iste deleniti
+				perferendis aliquam possimus. Vitae quibusdam, illo iure eveniet beatae
+				voluptatem totam!
+			</p>
+
+			<p class="pt2">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam
+				ullam ex corporis, porro temporibus, dolor asperiores iste deleniti
+				perferendis aliquam possimus. Vitae quibusdam, illo iure eveniet beatae
+				voluptatem totam!
+			</p>
+
+			<p class="pt2">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam
+				ullam ex corporis, porro temporibus, dolor asperiores iste deleniti
+				perferendis aliquam possimus. Vitae quibusdam, illo iure eveniet beatae
+				voluptatem totam!
 			</p>
 		</div>
-	</div>
+	</grid>
 </template>
 
 <script setup>
@@ -22,11 +35,9 @@ const { curTask } = storeToRefs(useTasks());
 
 <style lang="sass" scoped>
 .task__content
-	position: absolute
-	bottom: calc(-5rem - 92px)
-	padding-bottom: 5rem
-h1
-	font-size: 5rem
-	font-weight: 600
-	margin: 0 0 1rem 0
+	margin-top: -25%
+.task__content > div
+	width: clamp(320px, 100%, 640px)
+
+.task__details
 </style>

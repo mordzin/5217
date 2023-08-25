@@ -7,6 +7,10 @@
 @each $num in (0, 1, 2, 3, 4, 5, 6, 7)
 	.fs#{ $num }
 		font-size: #{calc( 7 / $num )}rem
+		line-height: #{calc( (7 / $num) * 1.25 )}rem
+
+p, h1, h2, h3, h4, h5, h6
+	line-break: anywhere
 
 .fwb
 	font-weight: 500
@@ -18,20 +22,20 @@
 h1, h2, h3, h4, h5, h6
 	@extend .fwb
 
-h1, h2, h3, h4, h5, h6
-	&:not(:last-child)
-		margin-bottom: var(--1)
+// h1, h2, h3, h4, h5, h6
+// 	&:not(:last-child)
+// 		margin-bottom: var(--1)
 	
 h1
-	@extend .fs2
+	@extend .fs1
 h2
-	@extend .fs3
+	@extend .fs2
 h3
-	@extend .fs4
+	@extend .fs3
 h4
-	@extend .fs5
+	@extend .fs4
 h5
-	@extend .fs6
+	@extend .fs5
 
 p
 	@extend .fwr

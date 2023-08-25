@@ -1,94 +1,85 @@
 <template>
-	<grid class="timer" @click="toggleTimer()">
-		<svg viewBox="0 0 360 360" :class="time.isPaused ? 'isPaused' : ''">
-			<text class="timer__numbers" x="60" y="188" dominant-baseline="central">
-				{{ time.minutes }}
-				<tspan class="seconds" opacity="0.50">
-					{{
-						time.seconds < 10
-							? String(time.seconds).padStart(2, 0)
-							: time.seconds
-					}}
-				</tspan>
+	<grid
+		class="timer gaic jic gaic h100 w100"
+		@click="toggleTimer()"
+		:class="{ blur: useTasks().curTask }"
+	>
+		<svg viewBox="0 0 320 320" :class="time.isPaused ? 'isPaused' : ''">
+			<text
+				class="timer__numbers"
+				x="160"
+				y="160"
+				fill="#fff"
+				dominant-baseline="central"
+				text-anchor="middle"
+			>
+				{{ currentTime }}
 			</text>
-			<circle r="180" cx="180" cy="180"></circle>
-			<circle
-				r="180"
-				cx="180"
-				cy="180"
-				:stroke-dasharray="1111"
-				:stroke-dashoffset="
-					(1111 / 3540) * (time.minutes * 60 + time.seconds) * -1
-				"
-			></circle>
+
+			<ellipse
+				ry="148"
+				rx="148"
+				id="progress__circle"
+				cy="160"
+				cx="160"
+				fill="none"
+				stroke="#00000020"
+				stroke-width="24"
+			/>
+			<ellipse
+				ry="148"
+				rx="148"
+				id="progress__circle"
+				cy="160"
+				cx="160"
+				fill="none"
+				stroke-width="24"
+				stroke="#ffffff20"
+				:stroke-dasharray="920"
+				style="transform: rotate(-90deg) translate(-320px)"
+				:stroke-dashoffset="progress"
+			/>
 		</svg>
 	</grid>
 </template>
 
 <script setup>
 const time = reactive({
-	work: 52,
-	break: 17,
-	seconds: 0,
-	minutes: 59,
+	now: 0,
+	total: 4140000,
+	work: 3120000,
+	break: 1020000,
 	isPaused: true,
 	timerInterval: null,
 });
 
+const currentTime = computed(() => {
+	const elapsed = time.total - time.now;
+	const seconds = formatTime(`${Math.floor((elapsed % 60000) / 1000)}`);
+	const minutes = formatTime(`${Math.floor(elapsed / 60000)}`);
+	return `${minutes}:${seconds}`;
+});
+
 const progress = computed(() => {
-	// # Calc dasharray and dashoffset by time
-	const total = time.work + time.break;
-	const dasharray = 1121;
-	const dashoffset = 1118;
-	const dasharrayWork = (dasharray * time.work) / total;
-	const dasharrayBreak = (dasharray * time.break) / total;
-	const dashoffsetWork = (dashoffset * time.work) / total;
-	return {
-		dasharrayWork,
-		dasharrayBreak,
-		dashoffsetWork,
-	};
+	const remaining = time.total - time.now;
+	return 920 - (remaining / time.total) * 920;
 });
 
 const toggleTimer = () => {
 	time.isPaused = !time.isPaused;
-
-	if (time.isPaused) {
-		clearInterval(time.timerInterval);
-	} else {
-		time.timerInterval = setInterval(() => {
-			if (time.seconds === 0) {
-				if (time.minutes === 0) clearInterval(time.timerInterval);
-				time.minutes--;
-				time.seconds = 59;
-			} else {
-				time.seconds--;
-			}
-		}, 1000);
-	}
+	if (time.isPaused) clearInterval(time.timerInterval);
+	else time.timerInterval = setInterval(() => (time.now += 1000), 1000);
 };
 </script>
 
 <style lang="sass" scoped>
 .timer
-	width: 400px
+	z-index: -1
 	svg
-		width: fit-content
-		height: fit-content
-		overflow: visible
-		circle
-			fill: none
-			outline-offset: -12px
-			stroke: #fff
-			stroke-opacity: 0.33
-			stroke-location: inside
-			stroke-width: 24px
-			transform: rotate(-90deg)
-			transform-origin: center
-			transition: stroke-dashoffset 1s linear
-		.timer__numbers
-			font-size: 7rem
-			fill: #ffffff
-			tspan
-				font-size: 4rem
+		width: clamp(320px, 100%, 480px)
+		text
+			font-size: 4rem
+
+.blur
+	filter: blur(var(--8))
 </style>

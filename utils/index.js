@@ -49,6 +49,8 @@ export const getCatalogs = (arr) => {
 	return arr.filter((data) => is(data, ["catalog"]));
 };
 
+export const formatTime = (time) => time.toString().padStart(2, "0");
+
 export const uuid = (size) => {
 	// Data
 	const alphabet =
